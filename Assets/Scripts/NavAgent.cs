@@ -40,11 +40,13 @@ public class NavAgent : MonoBehaviour
             agent.enabled = false;
             Scrimer = true;
             animAgent.Play("Attack");
-            other.gameObject.GetComponent<playerctrl>().enabled = false;
+            other.gameObject.GetComponent<FirstPersonMovement>().enabled = false;
+            other.gameObject.GetComponent<Jump>().enabled = false;
+            other.gameObject.GetComponent<Crouch>().enabled = false;
             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             other.transform.position = ruka.position;
             other.transform.SetParent(ruka);
-
+            other.gameObject.GetComponent<FirstPersonLook>().enabled = false;
 
         }
     }
