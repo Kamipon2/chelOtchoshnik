@@ -1,9 +1,16 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering;
+using System.IO.Enumeration;
+using System.Collections.Generic;
+using System;
 public class GraphicsConfigManager : MonoBehaviour
 {
     public string configFilePath;
+    public string MyGames;
+    public string Deltaink;
+    public string Chel;
+
 
     // Настройки по умолчанию
     private int qualityLevel = 2;
@@ -24,6 +31,9 @@ public class GraphicsConfigManager : MonoBehaviour
     void Start()
     {
         //configFilePath = Path.Combine(Application.persistentDataPath, "graphicsConfig.txt");
+        Directory.CreateDirectory(MyGames);
+        Directory.CreateDirectory(Deltaink);
+        Directory.CreateDirectory(Chel);
         LoadConfig();
         ApplySettings();
     }
@@ -191,24 +201,24 @@ public class GraphicsConfigManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // Нажмите пробел для изменения настроек
-        {
-            ChangeSettings(Random.Range(0, QualitySettings.names.Length), 
-                           !fullscreen, 
-                           Random.Range(0, Screen.resolutions.Length),
-                           !vSync,
-                           Random.Range(0, 4), 
-                           Random.Range(0, 3), 
-                           Random.Range(0, 3), 
-                           Random.Range(60f, 90f), 
-                           Random.value > 0.5f,
-                           Random.value > 0.5f,
-                           Random.value > 0.5f,
-                           Random.value > 0.5f,
-                           Random.value > 0.5f,
-                           Random.Range(0, 3)); // Предполагаем, что 0-2 — допустимые значения для Anisotropic Filtering
-                           
-            Debug.Log($"Настройки сохранены: Quality Level: {qualityLevel}, Fullscreen: {fullscreen}, Resolution Index: {resolutionIndex}, V-Sync: {vSync}, Anti-Aliasing: {antiAliasing}, Shadow Quality: {shadowQuality}, Texture Quality: {textureQuality}, Field of View: {fieldOfView}, Ambient Occlusion: {ambientOcclusion}, Bloom: {bloom}, Motion Blur: {motionBlur}, Depth of Field: {depthOfField}, Post Processing Effects: {postProcessingEffects}, Anisotropic Filtering: {anisotropicFiltering}");
-        }
+        //if (Input.GetKeyDown(KeyCode.Space)) // Нажмите пробел для изменения настроек
+        //{
+        //    ChangeSettings(Random.Range(0, QualitySettings.names.Length), 
+        //                   !fullscreen, 
+        //                   Random.Range(0, Screen.resolutions.Length),
+        //                   !vSync,
+         //                  Random.Range(0, 4), 
+        //                   Random.Range(0, 3), 
+         //                  Random.Range(0, 3), 
+         //                  Random.Range(60f, 90f), 
+        //                   Random.value > 0.5f,
+        //                   Random.value > 0.5f,
+         //                  Random.value > 0.5f,
+        //                   Random.value > 0.5f,
+         //                  Random.value > 0.5f,
+         //                  Random.Range(0, 3)); // Предполагаем, что 0-2 — допустимые значения для Anisotropic Filtering
+        //                   
+        //    Debug.Log($"Настройки сохранены: Quality Level: {qualityLevel}, Fullscreen: {fullscreen}, Resolution Index: {resolutionIndex}, V-Sync: {vSync}, Anti-Aliasing: {antiAliasing}, Shadow Quality: {shadowQuality}, Texture Quality: {textureQuality}, Field of View: {fieldOfView}, Ambient Occlusion: {ambientOcclusion}, Bloom: {bloom}, Motion Blur: {motionBlur}, Depth of Field: {depthOfField}, Post Processing Effects: {postProcessingEffects}, Anisotropic Filtering: {anisotropicFiltering}");
+        //}
     }
 }
