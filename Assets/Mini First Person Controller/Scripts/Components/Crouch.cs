@@ -3,6 +3,7 @@ using UnityEngine;
 public class Crouch : MonoBehaviour
 {
     public KeyCode key = KeyCode.LeftControl;
+    public bool isDontWake;
 
     [Header("Slow Movement")]
     [Tooltip("Movement to slow down when crouched.")]
@@ -32,6 +33,20 @@ public class Crouch : MonoBehaviour
         movement = GetComponentInParent<FirstPersonMovement>();
         headToLower = movement.GetComponentInChildren<Camera>().transform;
         colliderToLower = movement.GetComponentInChildren<CapsuleCollider>();
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "VENT")
+        {
+            isDontWake = true;
+        }
+    }
+    void OnTriggerExit(Collider other1)
+    {
+        if(other1.gameObject.tag == "VENT")
+        {
+            isDontWake = false;
+        }
     }
 
     void LateUpdate()
@@ -86,6 +101,8 @@ public class Crouch : MonoBehaviour
         }
         else
         {
+            if(!isDontWake)
+            {
             if (IsCrouched)
             {
                 // Rise the head back up.
@@ -105,6 +122,7 @@ public class Crouch : MonoBehaviour
                 IsCrouched = false;
                 SetSpeedOverrideActive(false);
                 CrouchEnd?.Invoke();
+            }
             }
         }
     }

@@ -9,7 +9,7 @@ public class NavAgent : MonoBehaviour
     public GameObject[] tochki;
     public AnimationClip[] anim;
     public Animation animAgent;
-    public bool Scrimer;
+    public static bool Scrimer;
     public Transform ruka;
 
     void Start()
@@ -20,9 +20,12 @@ public class NavAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!Scrimer)
+        {
         if(agent.remainingDistance <= 0.2f)
         {
             StartCoroutine("say");
+        }
         }
     }
     IEnumerator say()

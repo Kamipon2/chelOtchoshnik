@@ -29,7 +29,10 @@ public class EnemyAI : MonoBehaviour
     {
         if (isChasing)
         {
-            ChasePlayer();
+            if(!NavAgent.Scrimer)
+            {
+                ChasePlayer();
+            }
         }
         else
         {
