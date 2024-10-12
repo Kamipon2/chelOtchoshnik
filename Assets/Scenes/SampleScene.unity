@@ -2605,10 +2605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978ac94bbb3113448c1ff3e84f1c061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configFilePath: C:\Users\artem_puzo\Documents\My Games\DeltaInk\Chel\Config.txt
-  MyGames: C:\Users\artem_puzo\Documents\My Games
-  Deltaink: C:\Users\artem_puzo\Documents\My Games\DeltaInk
-  Chel: C:\Users\artem_puzo\Documents\My Games\DeltaInk\Chel
+  configFilePath: C:\MyGames\DeltaInk\Chel\Config.txt
+  MyGames: C:\MyGames
+  Deltaink: C:\MyGames\DeltaInk
+  Chel: C:\MyGames\DeltaInk\Chel
 --- !u!1 &852227622 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2800250516343163423, guid: 0f9262ea294f0e548a95dc0aa30226ab, type: 3}
