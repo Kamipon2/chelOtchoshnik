@@ -10,14 +10,12 @@ public class EnemyAI : MonoBehaviour
     public float chaseSpeed = 3.5f; 
     public float stoppingDistance = 1.5f; 
     public float chaseDuration = 6f; 
-    public AudioClip[] randomSounds; // Массив звуков для воспроизведения
-    public float soundPlayIntervalMin = 5f; // Минимальный интервал между воспроизведением звуков
-    public float soundPlayIntervalMax = 10f; // Максимальный интервал между воспроизведением звуков
-
+    public AudioClip[] randomSounds; 
+    public float soundPlayIntervalMin = 5f;
+    public float soundPlayIntervalMax = 10f;
     private NavMeshAgent agent;
     private AudioSource audioSource;
     private bool isChasing = false;
-
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -57,7 +55,7 @@ public class EnemyAI : MonoBehaviour
                     {
                         Debug.Log("Игрок обнаружен!");
                         isChasing = true;
-                        StopCoroutine(PlayRandomSound()); // Остановить воспроизведение звуков при преследовании
+                        StopCoroutine(PlayRandomSound());
                         StartCoroutine(EndChaseAfterTime(chaseDuration)); 
                     }
                 }
@@ -86,7 +84,7 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(time);
         isChasing = false;
         Debug.Log("Преследование завершено!");
-        StartCoroutine(PlayRandomSound()); // Возобновить воспроизведение звуков после преследования
+        StartCoroutine(PlayRandomSound());
     }
 
     private IEnumerator PlayRandomSound()
@@ -95,7 +93,7 @@ public class EnemyAI : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(soundPlayIntervalMin, soundPlayIntervalMax));
 
-            if (!isChasing) // Проверяем, не преследует ли враг игрока
+            if (!isChasing)
             {
                 int randomIndex = Random.Range(0, randomSounds.Length);
                 audioSource.PlayOneShot(randomSounds[randomIndex]);

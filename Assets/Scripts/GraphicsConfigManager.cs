@@ -10,9 +10,6 @@ public class GraphicsConfigManager : MonoBehaviour
     public string MyGames;
     public string Deltaink;
     public string Chel;
-
-
-    // Настройки по умолчанию
     private int qualityLevel = 2;
     private bool fullscreen = true;
     private int resolutionIndex = 0;
@@ -21,16 +18,15 @@ public class GraphicsConfigManager : MonoBehaviour
     private int shadowQuality = 2;
     private int textureQuality = 1; 
     private float fieldOfView = 60f;
-    private bool ambientOcclusion = true; // Окклюзия окружающего света
-    private bool bloom = false; // Эффект свечения
-    private bool motionBlur = false; // Размытие движения
-    private bool depthOfField = false; // Глубина резкости
-    private bool postProcessingEffects = true; // Эффекты постобработки
-    private int anisotropicFiltering = 1; // Анизотропная фильтрация
+    private bool ambientOcclusion = true;
+    private bool bloom = false;
+    private bool motionBlur = false;
+    private bool depthOfField = false;
+    private bool postProcessingEffects = true;
+    private int anisotropicFiltering = 1;
 
     void Start()
     {
-        //configFilePath = Path.Combine(Application.persistentDataPath, "graphicsConfig.txt");
         Directory.CreateDirectory(MyGames);
         Directory.CreateDirectory(Deltaink);
         Directory.CreateDirectory(Chel);
@@ -101,7 +97,7 @@ public class GraphicsConfigManager : MonoBehaviour
         }
         else
         {
-            SaveConfig(); // Создать файл с настройками по умолчанию, если он не существует
+            SaveConfig();
         }
     }
 
@@ -144,32 +140,24 @@ public class GraphicsConfigManager : MonoBehaviour
 
         Camera.main.fieldOfView = fieldOfView;
 
-        // Здесь можно добавить код для применения эффектов постобработки
-        // Например, если вы используете Post Processing Stack в Unity:
         var postProcessingVolume = Camera.main.GetComponent<UnityEngine.Rendering.PostProcessing.PostProcessVolume>();
         if (postProcessingVolume != null)
         {
             postProcessingVolume.enabled = postProcessingEffects;
 
-            // Применяем другие эффекты в зависимости от настроек
-            // Пример: ambient occlusion
             var aoLayer = postProcessingVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.AmbientOcclusion>();
             if (aoLayer != null) aoLayer.active = ambientOcclusion;
 
-            // Пример: bloom
             var bloomLayer = postProcessingVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.Bloom>();
             if (bloomLayer != null) bloomLayer.active = bloom;
 
-            // Пример: motion blur
             var motionBlurLayer = postProcessingVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.MotionBlur>();
             if (motionBlurLayer != null) motionBlurLayer.active = motionBlur;
 
-            // Пример: depth of field
             var dofLayer = postProcessingVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.DepthOfField>();
             if (dofLayer != null) dofLayer.active = depthOfField;
         }
 
-        // Установка анизотропной фильтрации
         QualitySettings.anisotropicFiltering = (AnisotropicFiltering)anisotropicFiltering;
     }
 
