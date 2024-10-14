@@ -12,7 +12,11 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - CAMERA_REFLECTION_CUBEMAP
+  - DISPLACEMENT_OFF
+  - FLOW_OFF
+  - TERRAIN_MAPPING_LOCAL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -23,6 +27,50 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - CameraReflectionCubemap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - FoamTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SystemTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TerrainFlowHeightmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - TerrainFog:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WavesHeightmap1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WavesHeightmap2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WavesHeightmap3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WavesNormalmap1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WavesNormalmap2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WavesNormalmap3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -44,7 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7d54bcff98090f34e9823224fe2efd8f, type: 3}
+        m_Texture: {fileID: 2800000, guid: fe3de945416c33e4baee4b05bc4eed4e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -61,6 +109,51 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - AmbientBias: 0.5
+    - AmbientPower: 0.5
+    - CameraReflectionCubemapDistortion: 1
+    - CameraReflectionCubemapScale: 10
+    - CameraReflectionDistortion: 1
+    - CameraReflectionStrength: 1
+    - CameraRefractionDistortion: 1
+    - Camera_Reflection: 1
+    - DetailDistance: 250
+    - DetailMaxMipMap: 8
+    - Displacement: 1
+    - Flow: 1
+    - FoamBlend: 0.5
+    - FoamBrightness: 2
+    - FoamDepth: 1
+    - FoamDistortion: 2
+    - FoamHeight: 0.5
+    - FoamPower: 0.5
+    - FoamScale: 4
+    - FoamSpeed: 0.5
+    - FoamTiling: 100
+    - FogDensity: 0.33
+    - FogPower: 1
+    - FresnelBias: 0.0255
+    - FresnelPower: 5
+    - SpecularPower: 4
+    - SubsurfaceScatteringPower: 4
+    - SubsurfaceScatteringScale: 1
+    - SystemCalmHeight: 0
+    - SystemTime: 1
+    - SystemValue1: 1
+    - SystemValue2: 1
+    - SystemValue3: 1
+    - SystemValue4: 1
+    - SystemValue5: 1
+    - SystemValue6: 1
+    - TerrainFlowPower: 0
+    - TerrainHeight: 0
+    - TerrainResolution: 10
+    - Terrain_Mapping: 1
+    - WavesCount: 1
+    - WavesNormalmapBump1: 1
+    - WavesNormalmapBump2: 1
+    - WavesNormalmapBump3: 1
+    - WavesSlots: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -78,6 +171,31 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - CameraReflectionColor: {r: 1, g: 1, b: 1, a: 0}
+    - CameraRefractionColor: {r: 1, g: 1, b: 1, a: 0}
+    - SpecularColor: {r: 0.1, g: 0.1, b: 0.1, a: 0}
+    - SubsurfaceScatteringColor: {r: 1, g: 1, b: 1, a: 0}
+    - SystemColor: {r: 1, g: 1, b: 1, a: 0}
+    - SystemVector: {r: 0, g: 0, b: 0, a: 0}
+    - TerrainPosition: {r: 0, g: 0, b: 0, a: 0}
+    - WavesAmplitude1: {r: 0, g: 0, b: 0, a: 0}
+    - WavesAmplitude2: {r: 0, g: 0, b: 0, a: 0}
+    - WavesAmplitude3: {r: 0, g: 0, b: 0, a: 0}
+    - WavesBump1: {r: 0, g: 0, b: 0, a: 0}
+    - WavesBump2: {r: 0, g: 0, b: 0, a: 0}
+    - WavesBump3: {r: 0, g: 0, b: 0, a: 0}
+    - WavesFoam1: {r: 0, g: 0, b: 0, a: 0}
+    - WavesFoam2: {r: 0, g: 0, b: 0, a: 0}
+    - WavesFoam3: {r: 0, g: 0, b: 0, a: 0}
+    - WavesRotation1: {r: 0, g: 0, b: 0, a: 0}
+    - WavesRotation2: {r: 0, g: 0, b: 0, a: 0}
+    - WavesRotation3: {r: 0, g: 0, b: 0, a: 0}
+    - WavesSpeed1: {r: 0, g: 0, b: 0, a: 0}
+    - WavesSpeed2: {r: 0, g: 0, b: 0, a: 0}
+    - WavesSpeed3: {r: 0, g: 0, b: 0, a: 0}
+    - WavesTiling1: {r: 0, g: 0, b: 0, a: 0}
+    - WavesTiling2: {r: 0, g: 0, b: 0, a: 0}
+    - WavesTiling3: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
