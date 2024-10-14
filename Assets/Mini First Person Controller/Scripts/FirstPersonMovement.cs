@@ -7,9 +7,11 @@ public class FirstPersonMovement : MonoBehaviour
 
     [Header("Running")]
     public bool canRun = true;
+    public SprintColosScript RUN;
     public bool IsRunning { get; private set; }
     public float runSpeed = 9;
     public KeyCode runningKey = KeyCode.LeftShift;
+    public float targetMovingSpeed;
 
     Rigidbody rigidbody;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
@@ -26,10 +28,18 @@ public class FirstPersonMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Update IsRunning from input.
-        IsRunning = canRun && Input.GetKey(runningKey);
+        
 
         // Get targetMovingSpeed.
-        float targetMovingSpeed = IsRunning ? runSpeed : speed;
+        if(RUN.enable)
+        {
+            IsRunning = canRun && Input.GetKey(runningKey);
+        }
+        else
+        {
+            IsRunning = false;
+        }
+        targetMovingSpeed = IsRunning ? runSpeed : speed;
         if (speedOverrides.Count > 0)
         {
             targetMovingSpeed = speedOverrides[speedOverrides.Count - 1]();
