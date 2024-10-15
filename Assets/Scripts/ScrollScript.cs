@@ -17,6 +17,7 @@ public class ScrollScript : MonoBehaviour
     public float BEzTime;
     public float BEzInterval;
     private float BezOriginal;
+    public PickScript pick;
 
     // Update is called once per frame
     void Awake()
@@ -95,6 +96,11 @@ public class ScrollScript : MonoBehaviour
         {
            LeanTween.cancel(icons);
            LeanTween.moveLocal(icons, new Vector3(1073,icons.transform.localPosition.y ,0), 1f);
+        }
+        if(Input.GetMouseButtonDown(0))
+        {
+            ItemFact = ItemPick;
+            pick.Set();
         }
         
     }
