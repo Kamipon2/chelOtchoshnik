@@ -1,115 +1,118 @@
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyPatrol : MonoBehaviour
 {
-    public Transform player; 
-    public float detectionRange = 10f; 
-    public float fieldOfViewAngle = 110f; 
-    public float chaseSpeed = 3.5f; 
-    public float stoppingDistance = 1.5f; 
-    public float chaseDuration = 6f; 
-    public AudioClip[] randomSounds; 
-    public float soundPlayIntervalMin = 5f;
-    public float soundPlayIntervalMax = 10f;
+    public Transform[] patrolPoints; 
+    public float patrolSpeed = 2f;
+    public float chaseSpeed = 4f;
+    public float detectionRadius = 10f;
+    public float chaseDuration = 5f;
+    public float fieldOfViewAngle = 110f;
+
     private NavMeshAgent agent;
-    private AudioSource audioSource;
+    private Transform player;
+    private int currentPatrolIndex;
     private bool isChasing = false;
-    private void Start()
+    private float chaseTimer;
+
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        audioSource = GetComponent<AudioSource>();
-        StartCoroutine(PlayRandomSound());
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        chaseTimer = chaseDuration;
+        currentPatrolIndex = 0;
+
+        GoToNextPatrolPoint();
     }
 
-    private void Update()
+    void Update()
     {
         if (isChasing)
         {
-            if(!NavAgent.Scrimer)
-            {
-                ChasePlayer();
-            }
+            ChasePlayer();
         }
         else
         {
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            {
+                GoToNextPatrolPoint();
+            }
             DetectPlayer();
         }
     }
 
-    private void DetectPlayer()
+    void GoToNextPatrolPoint()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer <= detectionRange)
-        {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        if (patrolPoints.Length == 0) return;
 
-            if (angleToPlayer < fieldOfViewAngle / 2)
+        agent.speed = patrolSpeed;
+        agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length; 
+    }
+
+    void DetectPlayer()
+    {
+        Vector3 directionToPlayer = player.position - transform.position;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
+        if (directionToPlayer.magnitude < detectionRadius && angleToPlayer < fieldOfViewAngle / 2)
+        {
+            if (IsPlayerVisible())
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, directionToPlayer, out hit, detectionRange))
-                {
-                    if (hit.transform == player)
-                    {
-                        Debug.Log("Игрок обнаружен!");
-                        isChasing = true;
-                        StopCoroutine(PlayRandomSound());
-                        StartCoroutine(EndChaseAfterTime(chaseDuration)); 
-                    }
-                }
+                isChasing = true;
+                chaseTimer = chaseDuration;
             }
         }
     }
 
-    private void ChasePlayer()
+    void ChasePlayer()
     {
-        agent.speed = chaseSpeed;
-        agent.SetDestination(player.position);
-
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer <= stoppingDistance)
+        if (chaseTimer > 0)
         {
-            agent.isStopped = true; 
+            chaseTimer -= Time.deltaTime;
+            agent.speed = chaseSpeed;
+            agent.SetDestination(player.position);
+            
+            
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
         else
         {
-            agent.isStopped = false;
+            isChasing = false; 
+            GoToNextPatrolPoint(); 
         }
     }
 
-    private IEnumerator EndChaseAfterTime(float time)
+    bool IsPlayerVisible()
     {
-        yield return new WaitForSeconds(time);
-        isChasing = false;
-        Debug.Log("Преследование завершено!");
-        StartCoroutine(PlayRandomSound());
-    }
+        RaycastHit hit;
+        Vector3 directionToPlayer = player.position - transform.position;
 
-    private IEnumerator PlayRandomSound()
-    {
-        while (true)
+        if (Physics.Raycast(transform.position, directionToPlayer.normalized, out hit, detectionRadius))
         {
-            yield return new WaitForSeconds(Random.Range(soundPlayIntervalMin, soundPlayIntervalMax));
-
-            if (!isChasing)
+            if (hit.transform.CompareTag("Player"))
             {
-                int randomIndex = Random.Range(0, randomSounds.Length);
-                audioSource.PlayOneShot(randomSounds[randomIndex]);
-                Debug.Log("Воспроизведен звук: " + randomSounds[randomIndex].name);
+                return true; 
             }
         }
+        return false; 
     }
 
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        // Рисуем поле зрения врага
+        Gizmos.color = Color.yellow;
+        Vector3 leftBoundary = Quaternion.Euler(0, -fieldOfViewAngle / 2, 0) * transform.forward * detectionRadius;
+        Vector3 rightBoundary = Quaternion.Euler(0, fieldOfViewAngle / 2, 0) * transform.forward * detectionRadius;
 
-        Vector3 leftBoundary = Quaternion.Euler(0, -fieldOfViewAngle / 2, 0) * transform.forward * detectionRange;
-        Vector3 rightBoundary = Quaternion.Euler(0, fieldOfViewAngle / 2, 0) * transform.forward * detectionRange;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+
+        // Рисуем круг радиуса обнаружения
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }
